@@ -3,13 +3,17 @@
   LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
   const int trigPin = 9;
   const int echoPin = 10;
-  
+  const int backlightPin = 6;
+  const int brightness = 255;  // 0 = off, 255 = max bright
+
   void setup() {
     pinMode(trigPin, OUTPUT);
     pinMode(echoPin, INPUT);
+    pinMode(backlightPin, OUTPUT);
+    analogWrite(backlightPin, brightness);
     lcd.begin(16, 2);
   }
-  
+
   void loop() {
     digitalWrite(trigPin, LOW);
     delayMicroseconds(2);
@@ -19,7 +23,7 @@
 
     long duration = pulseIn(echoPin, HIGH);
     long cm = duration * 0.034 / 2;
-  
+
     lcd.clear();
 
     if (cm < 20) {
