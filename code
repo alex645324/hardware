@@ -1,50 +1,19 @@
-⏺ #include <LiquidCrystal.h>
+#include <LiquidCrystal.h>
 
   LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-  const int trigPin = 9;
-  const int echoPin = 10;
+  const int motorPin = 9;
   const int backlightPin = 6;
 
   void setup() {
-    pinMode(trigPin, OUTPUT);
-    pinMode(echoPin, INPUT);
+    pinMode(motorPin, OUTPUT);
     pinMode(backlightPin, OUTPUT);
     lcd.begin(16, 2);
+
+    analogWrite(backlightPin, 80);
+    lcd.setCursor(0, 0);
+    lcd.print("girls are weird");
   }
 
   void loop() {
-    digitalWrite(trigPin, LOW);
-    delayMicroseconds(2);
-    digitalWrite(trigPin, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigPin, LOW);
-  
-    long duration = pulseIn(echoPin, HIGH);
-    long cm = duration * 0.034 / 2;
-
-    lcd.clear();
-
-    if (cm < 20) {
-      lcd.setCursor(0, 0);
-      lcd.print("YOUR BREATH");
-      lcd.setCursor(0, 1);
-      lcd.print("STINKS!");
-
-      analogWrite(backlightPin, 255);
-      delay(150);
-      analogWrite(backlightPin, 0);
-      delay(150);
-      analogWrite(backlightPin, 255);
-      delay(150);
-      analogWrite(backlightPin, 0);
-      delay(150);
-    } else {
-      analogWrite(backlightPin, 80);
-      lcd.setCursor(0, 0);
-      lcd.print("Distance:");
-      lcd.setCursor(0, 1);
-      lcd.print(cm);
-      lcd.print(" cm");
-      delay(300);
-    }
+    analogWrite(motorPin, 255);
   }
